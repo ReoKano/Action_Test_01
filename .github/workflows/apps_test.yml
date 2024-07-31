@@ -1,0 +1,48 @@
+name: Sample Workflow
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build-and-comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Generate JWT
+        id: jwt
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > private-key.pem
+          export PRIVATE_KEY_PATH=private-key.pem
+          export APP_ID=YOUR_APP_ID
+          npx github-app-jwt $PRIVATE_KEY_PATH $APP_ID
+
+      - name: Get Installation access token
+        id: get-token
+        run: |
+          curl -XPOST -H "Authorization: Bearer ${{ steps.jwt.outputs.token }}" \
+            -H "Accept: application/vnd.github.machine-man-preview+json" \
+            "https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens" | jq -r .token > token.txt
+
+      - name: Run action
+        run: |
+          export TOKEN=$(cat token.txt)
+          export GITHUB_TOKEN=$TOKEN
+          npm run action
+
