@@ -42,16 +42,15 @@ jobs:
  #         node ./node_modules/github-app-jwt/index.js "$PRIVATE_KEY_PATH" $APP_ID
 
       - name: Get Installation access token 1
-        id: get-token-1
-        uses: actions/github-script@v3
+        uses: actions/github-script@v2
         with:
           script: |
             const fs = require('fs');
             const { Octokit } = require('@octokit/rest');
 
             // JWTÇÃê∂ê¨
-            const APP_ID = ${{ secrets.APP_ID }};
-            const PRIVATE_KEY = ${{ secrets.PRIVATE_KEY }};
+            const APP_ID = process.env.APP_ID;
+            const PRIVATE_KEY = process.env.PRIVATE_KEY;
             const PRIVATE_KEY_PATH = 'private-key.pem';
             fs.writeFileSync(PRIVATE_KEY_PATH, PRIVATE_KEY);
             const jwt = require('jsonwebtoken');
@@ -69,7 +68,7 @@ jobs:
             });
 
             const response = await octokit.apps.createInstallationAccessToken({
-            installation_id: ${{ github.event.installation.id }}
+            installation_id: context.payload.installation.id
             });
 
             console.log(response.data.token);
