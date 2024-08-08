@@ -27,10 +27,12 @@ jobs:
 
       - name: Generate JWT
         id: jwt
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > private-key.pem
+          echo "$PRIVATE_KEY" > private-key.pem
           export PRIVATE_KEY_PATH=private-key.pem
-          export APP_ID=YOUR_APP_ID
           npx github-app-jwt $PRIVATE_KEY_PATH $APP_ID
 
       - name: Get Installation access token
@@ -45,4 +47,3 @@ jobs:
           export TOKEN=$(cat token.txt)
           export GITHUB_TOKEN=$TOKEN
           npm run action
-
