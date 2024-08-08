@@ -5,20 +5,19 @@ on:
 
 jobs:
   demo_app_authentication:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Generate a token
         id: generate-token
-        env:
-          APP_ID: ${{ secrets.APP_ID }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         uses: actions/create-github-app-token@v1
         with:
-          app-id: APP_ID
-          private-key: PRIVATE_KEY
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Use the token
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
+          echo "${app-id}"
+          echo "${private-key}"
           gh api octocat
