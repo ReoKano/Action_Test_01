@@ -33,8 +33,8 @@ jobs:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           echo "$PRIVATE_KEY" > private-key.pem
-          export PRIVATE_KEY_PATH=private-key.pem
-          npx github-app-jwt $PRIVATE_KEY_PATH $APP_ID
+          set PRIVATE_KEY_PATH=private-key.pem
+          npx github-app-jwt "%PRIVATE_KEY_PATH%" %APP_ID%
 
       - name: Get Installation access token
         id: get-token
