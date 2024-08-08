@@ -20,6 +20,11 @@ jobs:
         with:
           node-version: 12
 
+      - name: Download github-app-jwt package
+        run: |
+          mkdir -p node_modules/github-app-jwt
+          curl -L https://github.com/octokit/github-app-jwt/releases/latest/download/github-app-jwt.js -o node_modules/github-app-jwt/index.js
+
       - name: Install dependencies
         run: npm install
 
@@ -34,7 +39,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private-key.pem
           set PRIVATE_KEY_PATH=private-key.pem
-          npx github-app-jwt "%PRIVATE_KEY_PATH%" %APP_ID%
+          node ./node_modules/github-app-jwt/index.js "$PRIVATE_KEY_PATH" $APP_ID
 
       - name: Get Installation access token
         id: get-token
