@@ -31,15 +31,49 @@ jobs:
  #     - name: Run tests
  #       run: npm test
 
-      - name: Generate JWT
-        id: jwt
-        env:
-          APP_ID: ${{ secrets.APP_ID }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: |
-          echo "$PRIVATE_KEY" > private-key.pem
-          set PRIVATE_KEY_PATH=private-key.pem
-          node ./node_modules/github-app-jwt/index.js "$PRIVATE_KEY_PATH" $APP_ID
+ #     - name: Generate JWT
+ #       id: jwt
+ #       env:
+ #         APP_ID: ${{ secrets.APP_ID }}
+ #         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+ #       run: |
+ #         echo "$PRIVATE_KEY" > private-key.pem
+ #         set PRIVATE_KEY_PATH=private-key.pem
+ #         node ./node_modules/github-app-jwt/index.js "$PRIVATE_KEY_PATH" $APP_ID
+
+      - name: Get Installation access token
+        id: get-token
+        uses: actions/github-script@v3
+        with:
+        script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
+
+            // JWTの生成
+            const APP_ID = ${{ secrets.APP_ID }};
+            const PRIVATE_KEY = ${{ secrets.PRIVATE_KEY }};
+            const PRIVATE_KEY_PATH = 'private-key.pem';
+            fs.writeFileSync(PRIVATE_KEY_PATH, PRIVATE_KEY);
+            const jwt = require('jsonwebtoken');
+            const now = Math.floor(Date.now() / 1000);
+            const payload = {
+            iat: now,
+            exp: now + 60,
+            iss: APP_ID
+            };
+            const token = jwt.sign(payload, fs.readFileSync(PRIVATE_KEY_PATH), { algorithm: 'RS256' });
+
+            // インストールトークンの取得
+            const octokit = new Octokit({
+            auth: token
+            });
+
+            const response = await octokit.apps.createInstallationAccessToken({
+            installation_id: ${{ github.event.installation.id }}
+            });
+
+            console.log(response.data.token);
+            fs.writeFileSync('token.txt', response.data.token);
 
       - name: Get Installation access token
         id: get-token
