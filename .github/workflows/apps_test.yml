@@ -41,8 +41,8 @@ jobs:
  #         set PRIVATE_KEY_PATH=private-key.pem
  #         node ./node_modules/github-app-jwt/index.js "$PRIVATE_KEY_PATH" $APP_ID
 
-      - name: Get Installation access token
-        id: get-token
+      - name: Get Installation access token 1
+        id: get-token-1
         uses: actions/github-script@v3
         with:
           script: |
@@ -75,8 +75,8 @@ jobs:
             console.log(response.data.token);
             fs.writeFileSync('token.txt', response.data.token);
 
-      - name: Get Installation access token
-        id: get-token
+      - name: Get Installation access token 2
+        id: get-token-2
         run: |
           curl -XPOST -H "Authorization: Bearer ${{ steps.jwt.outputs.token }}" \
             -H "Accept: application/vnd.github.machine-man-preview+json" \
