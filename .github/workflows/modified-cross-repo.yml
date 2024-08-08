@@ -1,7 +1,12 @@
 name: Modified cross repo
-on: push
+
+on: 
+  push:
+  workflow_dispatch:
+
 env:
-  TARGET_REPO: another-repo
+  TARGET_REPO: Action_Test_01 # GitHub Appsのインストール時に設定したリポジトリ
+
 jobs:
   checkout:
     runs-on: ubuntu-latest
