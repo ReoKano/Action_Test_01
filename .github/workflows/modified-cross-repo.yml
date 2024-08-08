@@ -13,7 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4       # スクリプト実行にはチェックアウトが必要
       - id: create
-        run: .github/scripts/token.sh   # GitHub Appsトークン生成スクリプトの実行
+        # GitHub Appsトークン生成スクリプトの実行
+        run: |
+          bash -c "chmod +x .github/scripts/token.sh"
+          ./.github/scripts/token.sh
         env:                            # App IDや秘密鍵は環境変数で渡すことに注意
           APP_ID: ${{ secrets.APP_ID }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
