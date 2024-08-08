@@ -28,6 +28,7 @@ installation_id="$(curl --location --silent --request GET \
   | jq -r '.id'
 )"
 
+
 # Access Tokens APIの実行
 token="$(curl --location --silent --request POST \
   --url "${GITHUB_API_URL}/app/installations/${installation_id}/access_tokens" \
