@@ -5,13 +5,12 @@ on:
 
 jobs:
   test_clone:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
       name: First Checkout Step
 
-
-    - uses: tibdex/github-app-token@v1
+    - uses: tibdex/github-app-token@v4
       id: get_installation_token
       with:
         app_id: ${{ secrets.APP_ID }}
@@ -22,9 +21,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        repository: <ReoKano/Action_Test_01>
+        repository: ReoKano/Action_Test_01
         token: ${{ steps.get_installation_token.outputs.token }}
-        path: <ReoKano/Action_Test_01_Clone>
+        path: ReoKano/Action_Test_01_Clone
 
 
     # example 1b - cloning repo - using git clone command
