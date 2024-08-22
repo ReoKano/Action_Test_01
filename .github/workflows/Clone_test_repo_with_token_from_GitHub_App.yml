@@ -23,11 +23,11 @@ jobs:
       with:
         repository: ReoKano/Action_Test_01
         token: ${{ steps.get_installation_token.outputs.token }}
-        path: ReoKano/Action_Test_01_Clone
+        path: D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone
 
 
     # example 1b - cloning repo - using git clone command
     - name: Clone Repository
       run: |
         mkdir -p D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone && cd D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone
-        git clone https://github.com/ReoKano/Action_Test_01.git
+        git clone https://github.com/ReoKano/Action_Test_01_Clone.git
