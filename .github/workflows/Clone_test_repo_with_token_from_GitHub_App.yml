@@ -26,9 +26,9 @@ jobs:
           path: 'Action_Test_01_CloneTest'  # ‘Š‘ÎƒpƒX
 
       - name: Create Directory
-        run: mkdir -p ${{ github.workspace }}/Action_Test_01_CloneTest
+        run: mkdir -p Action_Test_01_CloneTest
 
       - name: Clone Repository
         run: |
-          cd ${{ github.workspace }}/Action_Test_01_CloneTest
+          cd Action_Test_01_CloneTest
           git clone https://github.com/ReoKano/Action_Test_01.git
