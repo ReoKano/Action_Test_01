@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
         name: First Checkout Step
         with:
-          path: 'D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01'  # リポジトリのパスに修正
+          path: 'Action_Test_01'  # 相対パス
 
       - uses: tibdex/github-app-token@v1
         id: get_installation_token
@@ -23,7 +23,7 @@ jobs:
         with:
           repository: ReoKano/Action_Test_01
           token: ${{ steps.get_installation_token.outputs.token }}
-          path: 'D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_CloneTest'  # リポジトリのパスに修正
+          path: 'Action_Test_01_CloneTest'  # 相対パス
 
       - name: Clone Repository
         run: |
