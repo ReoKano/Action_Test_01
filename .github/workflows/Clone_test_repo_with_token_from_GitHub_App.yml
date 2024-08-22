@@ -29,5 +29,5 @@ jobs:
     # example 1b - cloning repo - using git clone command
     - name: Clone Repository
       run: |
-        mkdir D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone && cd D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone
-        git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/ReoKano/Action_Test_01_Clone.git
+        mkdir -p D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone && cd D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone
+        git clone https://github.com/ReoKano/Action_Test_01.git
