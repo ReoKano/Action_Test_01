@@ -9,6 +9,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       name: First Checkout Step
+      with:
+        path: 'D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01'  # リポジトリのパスに修正
 
     - uses: tibdex/github-app-token@v1
       id: get_installation_token
@@ -22,7 +24,7 @@ jobs:
       with:
         repository: ReoKano/Action_Test_01
         token: ${{ steps.get_installation_token.outputs.token }}
-        path: 'D:\a\Action_Test_01\Action_Test_01_Clone'
+        path: 'D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone'
 
 
     # example 1b - cloning repo - using git clone command
