@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v4
       name: First Checkout Step
 
-    - uses: tibdex/github-app-token@v4
+    - uses: tibdex/github-app-token@v1
       id: get_installation_token
       with:
         app_id: ${{ secrets.APP_ID }}
