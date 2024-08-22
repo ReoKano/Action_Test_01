@@ -26,9 +26,9 @@ jobs:
           path: 'Action_Test_01_CloneTest'  # 相対パス
 
       - name: Create Directory
-        run: mkdir -p D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_CloneTest   # 絶対パス
+        run: mkdir -p D:\work\Action_Test_01_CloneTest   # 絶対パス
 
       - name: Clone Repository
         run: |
-          cd D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_CloneTest    # 絶対パス
+          cd D:\work\Action_Test_01_CloneTest    # 絶対パス
           git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/ReoKano/Action_Test_01.git
