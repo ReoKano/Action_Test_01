@@ -1,0 +1,34 @@
+name: Clone test repo with token from GitHub App
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test_clone:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2.4.0
+      name: First Checkout Step
+
+
+    - uses: tibdex/github-app-token@v1
+      id: get_installation_token
+      with:
+        app_id: ${{ secrets.APP_ID }}
+        private_key: ${{ secrets.PRIVATE_KEY }}
+
+
+    # example 1a - cloning repo - clone using the `actions/checkout` step
+    - name: Checkout
+      uses: actions/checkout@v2.4.0
+      with:
+        repository: <ReoKano/Action_Test_01>
+        token: ${{ steps.get_installation_token.outputs.token }}
+        path: <ReoKano/Action_Test_01_Clone>
+
+
+    # example 1b - cloning repo - using git clone command
+    - name: Clone Repository
+      run: |
+        mkdir D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone && cd D:\work\ツール開発Gr\07_トヨタ大部屋対応\Action_Test_01_Clone
+        git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/ReoKano/Action_Test_01_Clone.git
